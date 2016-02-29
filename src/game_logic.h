@@ -9,15 +9,16 @@ typedef enum
     GAME_STATUS_NEW,
     GAME_STATUS_PLAYING,
     GAME_STATUS_WON,
-    GAME_STATUS_LOST
+    GAME_STATUS_LOST,
+    GAME_STATUS_ERROR
 } GameStatus;
 
 typedef struct
 {
-    uint32_t max_cell;
-    uint32_t max_random;
+    uint32_t win_level;
+    uint32_t random_max_level;
     uint32_t random_seed;
-    uint32_t random_state;
+    uint32_t random;
     uint64_t score;
     GameStatus status;
     Board* board;
@@ -53,6 +54,7 @@ void NewGame(Game* game);
  * If there is no room for new cells, status is set to GAME_STATUS_LOST,
  * unless the game status is already GAME_STATUS_WON.
  * If the game status is GAME_STATUS_NEW, it is set to GAME_STATUS_PLAYING.
+ * If there was an error (while allocating memory) the game status is set to GAME_STATUS_ERROR.
  */
 void NextTurn(Game* game);
 

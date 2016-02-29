@@ -6,6 +6,6 @@
  * A linear congruential generator.
  * Use the previous random number as input.
  */
-uint32_t Random(uint32_t prev);
+uint32_t NextRandom(uint32_t prev);
 
 #endif
