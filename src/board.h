@@ -6,9 +6,8 @@
 #include <stdint.h>
 
 typedef struct
-{
-    uint32_t rows, cols;
-    uint32_t* cells;
+{   int rows, cols;
+    int* cells;
 } Board;
 
 /*
@@ -18,7 +17,7 @@ typedef struct
  * Either rows or cols is 0
  * Failure to allocate memory
  */
-Board* CreateBoard(uint32_t rows, uint32_t cols);
+Board* CreateBoard(int rows, int cols);
 
 /*
  * Frees the memory occupied by a board.
