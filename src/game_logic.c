@@ -69,6 +69,14 @@ void NextTurn(Game* game)
     free(is);
 }
 
+void CheckTurn(Game* game)
+{	if(game == NULL) return;
+	int cell_count = game->board->rows * game->board->cols;
+	int i;
+	for(i = 0; i < cell_count; i++) if(game->board->cells[i] == 0) return;
+	if(game->status == GAME_STATUS_PLAYING) game->status = GAME_STATUS_LOST;
+}
+
 static int PushRowLeft(int* cells, int row, int cols)
 {   int begin = row * cols;
     int end = begin + cols;
@@ -103,7 +111,7 @@ int PushLeft(Game* game)
     int row, hasmoved = 0;
     for(row = 0; row < rows; row++)
     {   int points = PushRowLeft(game->board->cells, row, cols);
-        game->score += points;
+        if(points > 0) game->score += points;
         if(!hasmoved && points != 0) hasmoved = 1;
     }
     return hasmoved;
@@ -143,7 +151,7 @@ int PushRight(Game* game)
     int row, hasmoved = 0;
     for(row = 0; row < rows; row++)
     {   int points = PushRowRight(game->board->cells, row, cols);
-        game->score += points;
+        if(points > 0) game->score += points;
         if(!hasmoved && points != 0) hasmoved = 1;
     }
     return hasmoved;
@@ -187,7 +195,7 @@ int PushUp(Game* game)
     int col, hasmoved = 0;
     for(col = 0; col < cols; col++)
     {   int points = PushColumnUp(game->board->cells, col, rows, cols);
-        game->score += points;
+        if(points > 0) game->score += points;
         if(!hasmoved && points != 0) hasmoved = 1;
     }
     return hasmoved;
@@ -227,7 +235,7 @@ int PushDown(Game* game)
     int col, hasmoved = 0;
     for(col = 0; col < cols; col++)
     {   int points = PushColumnDown(game->board->cells, col, rows, cols);
-        game->score += (points > 0) ? points : 0;
+        if(points > 0) game->score += (points > 0) ? points : 0;
         if(!hasmoved && points != 0) hasmoved = 1;
     }
     return hasmoved;

@@ -57,6 +57,13 @@ void NewGame(Game* game);
 void NextTurn(Game* game);
 
 /*
+ * Checks whether or not there is room for new cells.
+ * If there is no room for new cells, status is set to GAME_STATUS_LOST,
+ * unless the game status is already GAME_STATUS_WON.
+ */
+void CheckTurn(Game* game);
+
+/*
  * Pushes all cells to the left.
  * Cells that have the same values that have no other cells in between
  * are joined together to a single tile.

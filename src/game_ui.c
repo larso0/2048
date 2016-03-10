@@ -71,10 +71,13 @@ static void DisplayCell(int row, int col, uint8_t width,
         for(i = 0; i < width; i++) mvaddch(row, col + i, ' ');
     row++;
     for(i = 0; i < width; i++) mvaddch(row, col + i, ' ');
+	row++;
+	move(row, 0);
 }
 
 static void DisplayGame(UI* ui)
-{   int* cells = ui->game->board->cells;
+{   erase();
+	int* cells = ui->game->board->cells;
     int rows = ui->game->board->rows, cols = ui->game->board->cols;
     int row, col;
     for(row = 0; row < rows; row++)
@@ -115,6 +118,8 @@ static void DisplayGame(UI* ui)
             }
         }
     }
+	if(has_colors()) attron(COLOR_PAIR(8));
+	printw("Score: %d", ui->game->score);
     refresh();
 }
 
@@ -123,27 +128,46 @@ void Run(UI* ui)
     NewGame(ui->game);
     NextTurn(ui->game);
     int c, running = 1;
-    while(running && ui->game->status != GAME_STATUS_ERROR &&
-          ui->game->status != GAME_STATUS_LOST)
+    while(running && ui->game->status != GAME_STATUS_ERROR)
     {   DisplayGame(ui);
         c = getch();
         switch(c)
         {
         case KEY_LEFT:
-            if(PushLeft(ui->game)) NextTurn(ui->game);
+			if(ui->game->status != GAME_STATUS_LOST)
+			{	if(PushLeft(ui->game)) NextTurn(ui->game);
+				else CheckTurn(ui->game);
+			}
             break;
         case KEY_RIGHT:
-            if(PushRight(ui->game)) NextTurn(ui->game);
-            break;
+			if(ui->game->status != GAME_STATUS_LOST)
+            {	if(PushRight(ui->game)) NextTurn(ui->game);
+				else CheckTurn(ui->game);
+			}
+			break;
         case KEY_UP:
-            if(PushUp(ui->game)) NextTurn(ui->game);
-            break;
+			if(ui->game->status != GAME_STATUS_LOST)
+			{	if(PushUp(ui->game)) NextTurn(ui->game);
+				else CheckTurn(ui->game);
+			}
+			break;
         case KEY_DOWN:
-            if(PushDown(ui->game)) NextTurn(ui->game);
-            break;
+			if(ui->game->status != GAME_STATUS_LOST)
+			{	if(PushDown(ui->game)) NextTurn(ui->game);
+				else CheckTurn(ui->game);
+			}
+			break;
         case 'q':
             running = 0;
             break;
+		case 'n':
+			NewGame(ui->game);
+			NextTurn(ui->game);
+			break;
+		case 'r':
+			StartGame(ui->game);
+			NextTurn(ui->game);
+			break;
         default:
             break;
         }
