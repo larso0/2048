@@ -71,10 +71,10 @@ void NextTurn(Game* game)
 
 void CheckTurn(Game* game)
 {	if(game == NULL) return;
-	int cell_count = game->board->rows * game->board->cols;
-	int i;
-	for(i = 0; i < cell_count; i++) if(game->board->cells[i] == 0) return;
-	if(game->status == GAME_STATUS_PLAYING) game->status = GAME_STATUS_LOST;
+    int cell_count = game->board->rows * game->board->cols;
+    int i;
+    for(i = 0; i < cell_count; i++) if(game->board->cells[i] == 0) return;
+    if(game->status == GAME_STATUS_PLAYING) game->status = GAME_STATUS_LOST;
 }
 
 static int PushRowLeft(int* cells, int row, int cols)
