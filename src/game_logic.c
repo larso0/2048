@@ -73,7 +73,15 @@ void CheckTurn(Game* game)
 {	if(game == NULL) return;
     int cell_count = game->board->rows * game->board->cols;
     int i;
-    for(i = 0; i < cell_count; i++) if(game->board->cells[i] == 0) return;
+    for(i = 0; i < cell_count; i++)
+    {   if(game->board->cells[i] == 0 ||
+           (i < cell_count - 1 &&
+            game->board->cells[i] == game->board->cells[i + 1]) ||
+           (i < cell_count - game->board->cols &&
+           game->board->cells[i] == game->board->cells[i + game->board->cols]))
+        {   return;
+        }
+    }
     if(game->status == GAME_STATUS_PLAYING) game->status = GAME_STATUS_LOST;
 }
 
