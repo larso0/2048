@@ -96,7 +96,7 @@ static int PushRowLeft(int* cells, int row, int cols)
             {   cells[i] *= 2;
                 cells[j] = 0;
                 points += cells[i];
-                i = j + 1;
+                i = j;
             }
         }
     }
@@ -136,7 +136,7 @@ static int PushRowRight(int* cells, int row, int cols)
             {   cells[i] *= 2;
                 cells[j] = 0;
                 points += cells[i];
-                i = j - 1;
+                i = j;
             }
         }
     }
@@ -180,7 +180,7 @@ static int PushColumnUp(int* cells, int col, int rows, int cols)
             {   cells[ii] *= 2;
                 cells[jj] = 0;
                 points += cells[ii];
-                i = j + 1;
+                i = j;
             }
         }
     }
@@ -220,7 +220,7 @@ static int PushColumnDown(int* cells, int col, int rows, int cols)
             {   cells[ii] *= 2;
                 cells[jj] = 0;
                 points += cells[ii];
-                i = j - 1;
+                i = j;
             }
         }
     }

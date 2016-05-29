@@ -57,8 +57,8 @@ void NewGame(Game* game);
 void NextTurn(Game* game);
 
 /*
- * Checks whether or not there is room for new cells.
- * If there is no room for new cells, status is set to GAME_STATUS_LOST,
+ * Checks if there are possible moves left to continue the game.
+ * If there are no possible moves, status is set to GAME_STATUS_LOST,
  * unless the game status is already GAME_STATUS_WON.
  */
 void CheckTurn(Game* game);
